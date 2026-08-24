@@ -254,6 +254,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 	// Check auth on mount
 	useEffect(() => {
+		if (import.meta.env.DEV) {
+			// DEV 预览：跳过真实鉴权调用，模拟已登录状态
+			dispatch({ type: "SET_USER", payload: 99999 });
+			dispatch({ type: "SET_LOADING", payload: false });
+			return;
+		}
 		checkAuth();
 	}, []);
 

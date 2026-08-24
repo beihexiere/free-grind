@@ -98,6 +98,13 @@ export function NavBar() {
 			visible: true, // Mandatory
 		},
 		{
+			value: "inbox",
+			label: t("nav.inbox"),
+			icon: MessageCircle,
+			path: "/chat",
+			visible: true, // Mandatory
+		},
+		{
 			value: "right-now",
 			label: t("nav.right_now"),
 			icon: RightNowIcon,
@@ -110,13 +117,6 @@ export function NavBar() {
 			icon: Flame,
 			path: "/interest",
 			visible: showInterest, // Toggleable
-		},
-		{
-			value: "inbox",
-			label: t("nav.inbox"),
-			icon: MessageCircle,
-			path: "/chat",
-			visible: true, // Mandatory
 		},
 	].filter(item => item.visible);
 

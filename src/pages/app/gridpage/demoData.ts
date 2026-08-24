@@ -1,7 +1,8 @@
 import type { BrowseCard } from "../GridPage.types";
 import type { ChatContactIndexRecord } from "../../../types/chat-contact-index";
 
-export const SHOW_DEMO_DATA = false; // Toggle this to show/hide demo profiles
+// DEV-only: 自动在 `bun run dev:web` 时显示 demo 卡片；`vite build` 生产构建时为 false，不影响 IPA
+export const SHOW_DEMO_DATA = import.meta.env.DEV; // Toggle this to show/hide demo profiles
 
 export const DEMO_CARDS: BrowseCard[] = [
 	{

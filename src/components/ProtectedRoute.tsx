@@ -18,7 +18,7 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
 	// exist today. This just swaps the offer in a moment after the real
 	// route would've rendered, which is fine for a one-time-ever prompt.
 	useEffect(() => {
-		if (!settingsReady || userId == null || hasOfferedRestore(userId)) {
+		if (import.meta.env.DEV || !settingsReady || userId == null || hasOfferedRestore(userId)) {
 			return;
 		}
 		let cancelled = false;
@@ -39,6 +39,12 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
 			cancelled = true;
 		};
 	}, [settingsReady, userId]);
+
+	// DEV 预览模式：跳过 auth gate，直接渲染子路由。
+	// 必须放在所有 hooks (useAuth/useState/useEffect) 之后，避免违反 React rules-of-hooks。
+	if (import.meta.env.DEV) {
+		return <>{children}</>;
+	}
 
 	if (isLoading) {
 		return <LoadingScreen />;

@@ -1012,7 +1012,7 @@ export function GridPage() {
 	}, [userId, ownDisplayName, selfCardImageUrl]);
 
 	const sortedCards = useMemo(() => {
-		const allCards = (SHOW_DEMO_DATA && showDebugInfo) ? [...DEMO_CARDS, ...cards] : cards;
+		const allCards = SHOW_DEMO_DATA ? [...DEMO_CARDS, ...cards] : cards;
 		let results: BrowseCard[];
 
 		if (sortBy === "default") {
@@ -1801,7 +1801,7 @@ export function GridPage() {
 							onManagePrivacy={() => navigate("/settings/privacy")}
 							cards={sortedCards}
 							chatContactIndexByProfileId={
-								(SHOW_DEMO_DATA && showDebugInfo)
+								SHOW_DEMO_DATA
 									? { ...DEMO_CHAT_STATUS, ...chatContactIndexByProfileId }
 									: chatContactIndexByProfileId
 							}

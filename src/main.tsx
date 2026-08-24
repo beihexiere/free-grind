@@ -32,6 +32,23 @@ const queryClient = new QueryClient({
 });
 
 void (async () => {
+	// DEV 预览：浏览器无 Tauri 运行时，跳过所有 Tauri 初始化，默认以 child 模式渲染 App
+	if (import.meta.env.DEV) {
+		ReactDOM.createRoot(document.getElementById("app")!).render(
+			<React.StrictMode>
+				<CrashBoundary>
+					<QueryClientProvider client={queryClient}>
+						<BrowserRouter>
+							<App />
+							<AppToaster />
+						</BrowserRouter>
+					</QueryClientProvider>
+				</CrashBoundary>
+			</React.StrictMode>,
+		);
+		return;
+	}
+
 	const runtimeContext = await getRuntimeContext();
 	const renderManager =
 		runtimeContext.mode === "manager" || runtimeContext.instanceLabel === "manager";

@@ -149,7 +149,8 @@ const CURRENT_APP_VERSION = import.meta.env.VITE_APP_VERSION;
 const PENDING_ANNOUNCEMENT = VERSION_ANNOUNCEMENTS.find((a) => a.version === CURRENT_APP_VERSION) ?? null;
 
 export default function App() {
-	const [showOnboarding, setShowOnboarding] = useState(() => !hasCompletedOnboarding());
+	// DEV 预览：跳过 onboarding gate，浏览器直连 GridPage
+	const [showOnboarding, setShowOnboarding] = useState(() => !import.meta.env.DEV && !hasCompletedOnboarding());
 	const [showAnnouncement, setShowAnnouncement] = useState(
 		() => !showOnboarding && !!PENDING_ANNOUNCEMENT && getLastSeenAnnouncementVersion() !== CURRENT_APP_VERSION,
 	);
@@ -174,7 +175,7 @@ export default function App() {
 
 	return (
 		<AuthProvider>
-			<SplashReadyBridge />
+			{!import.meta.env.DEV && <SplashReadyBridge />}
 			<PreferencesProvider>
 			<ExploreModeProvider>
 				<SinModeUnlockOverlay />
@@ -188,17 +189,21 @@ export default function App() {
 							<VersionAnnouncement announcement={PENDING_ANNOUNCEMENT} onClose={handleAnnouncementClose} />
 						</div>
 					) : (<TokenExpiredGate><OutdatedVersionGate><TestReminderGate>
-					{renderPhase >= 1 && <ManagerModeRedirect />}
-					{renderPhase >= 1 && <KeepScreenOnBridge />}
-					{renderPhase >= 2 && <PushNotificationBridge />}
-					{renderPhase >= 2 && <ManagedOptionsCacheBridge />}
-					{renderPhase >= 3 && <ChatRealtimeBridge />}
-					{renderPhase >= 3 && <VideoCallManager />}
-					{renderPhase >= 3 && <GridAutoRefreshBridge />}
-					{renderPhase >= 4 && <ActiveRouteBridge />}
-					{renderPhase >= 5 && (
+					{!import.meta.env.DEV && (
 						<>
-							<EntitlementsBridge />
+							{renderPhase >= 1 && <ManagerModeRedirect />}
+							{renderPhase >= 1 && <KeepScreenOnBridge />}
+							{renderPhase >= 2 && <PushNotificationBridge />}
+							{renderPhase >= 2 && <ManagedOptionsCacheBridge />}
+							{renderPhase >= 3 && <ChatRealtimeBridge />}
+							{renderPhase >= 3 && <VideoCallManager />}
+							{renderPhase >= 3 && <GridAutoRefreshBridge />}
+							{renderPhase >= 4 && <ActiveRouteBridge />}
+							{renderPhase >= 5 && (
+								<>
+									<EntitlementsBridge />
+								</>
+							)}
 						</>
 					)}
 					<Routes>
