@@ -1,0 +1,83 @@
+name: Build iOS IPA (Unsigned)
+
+# ============================================================
+# Free Grind - 自签用未签名 IPA 构建
+# ============================================================
+# 使用方式：
+#   1. Fork https://github.com/imaoreo/free-grind 到你的账号
+#      （必须保持 public，才能免费使用 macOS runner）
+#   2. 把本文件提交到你的 fork 的 .github/workflows/build-ios-ipa.yml
+#   3. GitHub 仓库页面 → Actions 标签 → 选 "Build iOS IPA (Unsigned)"
+#   4. 点 "Run workflow" → 选 development 分支 → Run
+#   5. 等 10~30 分钟构建完成
+#   6. 在该次 run 的页面拉到底部 Artifacts 区域下载 free-grind-unsigned-ipa.zip
+#   7. 解压得到 free-grind-unsigned.ipa，用全能签/Sideloadly 自签安装
+# ============================================================
+
+on:
+  workflow_dispatch:        # 手动触发
+    inputs:
+      ref:
+        description: "要构建的分支/tag/commit"
+        required: false
+        default: "development"
+  push:
+    branches: [main, development]
+    paths:
+      - "src/**"
+      - "src-tauri/**"
+      - "package.json"
+      - "bun.lock"
+      - "scripts/**"
+      - ".github/workflows/build-ios-ipa.yml"
+
+jobs:
+  build-ios:
+    runs-on: macos-14       # Apple Silicon (M1) macOS runner
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.ref || github.ref }}
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Setup Rust + iOS target
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-ios
+
+      - name: Cargo cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            src-tauri/target
+          key: ${{ runner.os }}-cargo-ios-${{ hashFiles('src-tauri/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-ios-
+
+      - name: Install xcodegen
+        run: brew install xcodegen
+
+      - name: Install JS deps
+        run: bun install
+
+      - name: Build unsigned IPA
+        run: bun run build:ios:ipa
+
+      - name: Show output
+        run: |
+          echo "=== Build output ==="
+          ls -la dist/ios/ || true
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: free-grind-unsigned-ipa
+          path: dist/ios/free-grind-unsigned.ipa
+          retention-days: 30
+          if-no-files-found: error
