@@ -24,13 +24,28 @@
 		"noFallthroughCasesInSwitch": true,
 		"forceConsistentCasingInFileNames": true,
 		"sourceMap": true,
-		"typeRoots": ["./node_modules/@types"]
+		"typeRoots": ["./node_modules/@types"],
+
+		/* DEV preview: 将 @tauri-apps/* 映射到本地 mock（仅在 dev:web 时生效）。
+		   与 vite.config.mjs 的 resolve.alias 保持一致。生产构建不受影响。 */
+		"paths": {
+			"@tauri-apps/api/core": ["./src/dev/mock-core.ts"],
+			"@tauri-apps/api/event": ["./src/dev/mock-event.ts"],
+			"@tauri-apps/api/path": ["./src/dev/mock-path.ts"],
+			"@tauri-apps/api/window": ["./src/dev/mock-window.ts"],
+			"@tauri-apps/plugin-sql": ["./src/dev/mock-sql.ts"],
+			"@tauri-apps/plugin-fs": ["./src/dev/mock-fs.ts"],
+			"@tauri-apps/plugin-os": ["./src/dev/mock-os.ts"],
+			"@tauri-apps/plugin-http": ["./src/dev/mock-http.ts"],
+			"@tauri-apps/plugin-notification": ["./src/dev/mock-notification.ts"],
+			"@tauri-apps/plugin-geolocation": ["./src/dev/mock-geolocation.ts"],
+			"@tauri-apps/plugin-opener": ["./src/dev/mock-opener.ts"],
+			"@gbyte/tauri-plugin-ios-photos": ["./src/dev/mock-ios-photos.ts"],
+			"tauri-plugin-android-fs-api": ["./src/dev/mock-android-fs.ts"],
+			"tauri-plugin-hotswap-api": ["./src/dev/mock-hotswap.ts"]
+		},
+		"baseUrl": "."
 	},
 	"include": ["src"],
 	"references": [{ "path": "./tsconfig.node.json" }]
-	// Path aliases are handled by https://svelte.dev/docs/kit/configuration#alias
-	// except $lib which is handled by https://svelte.dev/docs/kit/configuration#files
-	//
-	// If you want to overwrite includes/excludes, make sure to copy over the relevant includes/excludes
-	// from the referenced tsconfig.json - TypeScript does not merge them in
 }
