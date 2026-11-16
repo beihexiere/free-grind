@@ -28,6 +28,7 @@ export function useBrowseFilters(persistedBrowseFilters: BrowseFiltersDraft) {
 		persistedBrowseFilters.relationshipStatuses,
 	);
 	const [bodyTypes, setBodyTypes] = useState<number[]>(persistedBrowseFilters.bodyTypes);
+	const [ethnicities, setEthnicities] = useState<number[]>(persistedBrowseFilters.ethnicities);
 	const [sexualPositions, setSexualPositions] = useState<number[]>(
 		persistedBrowseFilters.sexualPositions,
 	);
@@ -61,6 +62,7 @@ export function useBrowseFilters(persistedBrowseFilters: BrowseFiltersDraft) {
 		setLookingFor(normalized.lookingFor);
 		setRelationshipStatuses(normalized.relationshipStatuses);
 		setBodyTypes(normalized.bodyTypes);
+		setEthnicities(normalized.ethnicities);
 		setSexualPositions(normalized.sexualPositions);
 		setMeetAt(normalized.meetAt);
 		setNsfwPics(normalized.nsfwPics);
@@ -101,11 +103,8 @@ export function useBrowseFilters(persistedBrowseFilters: BrowseFiltersDraft) {
 			lookingFor,
 			relationshipStatuses,
 			bodyTypes,
+			ethnicities,
 			sexualPositions,
-			meetAt,
-			nsfwPics,
-			tags,
-			nicknameFilter,
 		});
 	}, [
 		browseFilters,
@@ -119,6 +118,7 @@ export function useBrowseFilters(persistedBrowseFilters: BrowseFiltersDraft) {
 		lookingFor,
 		relationshipStatuses,
 		bodyTypes,
+		ethnicities,
 		sexualPositions,
 		meetAt,
 		nsfwPics,
@@ -160,6 +160,7 @@ export function useBrowseFilters(persistedBrowseFilters: BrowseFiltersDraft) {
 			lookingFor?: string;
 			relationshipStatuses?: string;
 			bodyTypes?: string;
+			ethnicities?: string;
 			sexualPositions?: string;
 			meetAt?: string;
 			nsfwPics?: string;
@@ -207,6 +208,7 @@ export function useBrowseFilters(persistedBrowseFilters: BrowseFiltersDraft) {
 		const parsedLookingFor = toOptionalNumberCsv(lookingFor);
 		const parsedRelationshipStatuses = toOptionalNumberCsv(relationshipStatuses);
 		const parsedBodyTypes = toOptionalNumberCsv(bodyTypes);
+		const parsedEthnicities = toOptionalNumberCsv(ethnicities);
 		const parsedSexualPositions = toOptionalNumberCsv(sexualPositions);
 		const parsedMeetAt = toOptionalNumberCsv(meetAt);
 		const parsedNsfwPics = toOptionalNumberCsv(nsfwPics);
@@ -216,6 +218,7 @@ export function useBrowseFilters(persistedBrowseFilters: BrowseFiltersDraft) {
 		if (parsedLookingFor) next.lookingFor = parsedLookingFor;
 		if (parsedRelationshipStatuses) next.relationshipStatuses = parsedRelationshipStatuses;
 		if (parsedBodyTypes) next.bodyTypes = parsedBodyTypes;
+		if (parsedEthnicities) next.ethnicities = parsedEthnicities;
 		if (parsedSexualPositions) next.sexualPositions = parsedSexualPositions;
 		if (parsedMeetAt) next.meetAt = parsedMeetAt;
 		if (parsedNsfwPics) next.nsfwPics = parsedNsfwPics;
@@ -234,6 +237,7 @@ export function useBrowseFilters(persistedBrowseFilters: BrowseFiltersDraft) {
 		lookingFor,
 		relationshipStatuses,
 		bodyTypes,
+		ethnicities,
 		sexualPositions,
 		meetAt,
 		nsfwPics,
@@ -261,6 +265,7 @@ export function useBrowseFilters(persistedBrowseFilters: BrowseFiltersDraft) {
 		setLookingFor([]);
 		setRelationshipStatuses([]);
 		setBodyTypes([]);
+		setEthnicities([]);
 		setSexualPositions([]);
 		setMeetAt([]);
 		setNsfwPics([]);
@@ -282,6 +287,7 @@ export function useBrowseFilters(persistedBrowseFilters: BrowseFiltersDraft) {
 		setLookingFor(normalized.lookingFor);
 		setRelationshipStatuses(normalized.relationshipStatuses);
 		setBodyTypes(normalized.bodyTypes);
+		setEthnicities(normalized.ethnicities);
 		setSexualPositions(normalized.sexualPositions);
 		setMeetAt(normalized.meetAt);
 		setNsfwPics(normalized.nsfwPics);
@@ -312,6 +318,8 @@ export function useBrowseFilters(persistedBrowseFilters: BrowseFiltersDraft) {
 		setRelationshipStatuses,
 		bodyTypes,
 		setBodyTypes,
+		ethnicities,
+		setEthnicities,
 		sexualPositions,
 		setSexualPositions,
 		meetAt,

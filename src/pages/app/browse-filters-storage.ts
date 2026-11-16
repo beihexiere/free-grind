@@ -47,6 +47,7 @@ export type BrowseFiltersDraft = {
 	lookingFor: number[];
 	relationshipStatuses: number[];
 	bodyTypes: number[];
+	ethnicities: number[];
 	sexualPositions: number[];
 	meetAt: number[];
 	nsfwPics: number[];
@@ -67,6 +68,7 @@ type BrowseFiltersDraftInput = {
 	lookingFor?: number[];
 	relationshipStatuses?: number[];
 	bodyTypes?: number[];
+	ethnicities?: number[];
 	sexualPositions?: number[];
 	meetAt?: number[];
 	nsfwPics?: number[];
@@ -100,6 +102,7 @@ export function getDefaultBrowseFiltersDraft(): BrowseFiltersDraft {
 		lookingFor: [],
 		relationshipStatuses: [],
 		bodyTypes: [],
+		ethnicities: [],
 		sexualPositions: [],
 		meetAt: [],
 		nsfwPics: [],
@@ -154,6 +157,9 @@ export function normalizeBrowseFiltersDraft(
 			? draft.relationshipStatuses
 			: defaults.relationshipStatuses,
 		bodyTypes: isNumberArray(draft.bodyTypes) ? draft.bodyTypes : defaults.bodyTypes,
+		ethnicities: isNumberArray(draft.ethnicities)
+			? draft.ethnicities
+			: defaults.ethnicities,
 		sexualPositions: isNumberArray(draft.sexualPositions)
 			? draft.sexualPositions
 			: defaults.sexualPositions,

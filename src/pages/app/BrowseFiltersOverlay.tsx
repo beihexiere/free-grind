@@ -35,6 +35,7 @@ import {
 } from "./browse-filters-storage";
 import {
 	getBodyTypeOptions,
+	getEthnicityOptions,
 	getLookingForOptions,
 	getMeetAtOptions,
 	getNsfwOptions,
@@ -93,6 +94,7 @@ export function BrowseFiltersOverlay({ initialDraft, onClose, onApply, isExplore
 	const [lookingFor, setLookingFor] = useState<number[]>(normalized.lookingFor);
 	const [relationshipStatuses, setRelationshipStatuses] = useState<number[]>(normalized.relationshipStatuses);
 	const [bodyTypes, setBodyTypes] = useState<number[]>(normalized.bodyTypes);
+	const [ethnicities, setEthnicities] = useState<number[]>(normalized.ethnicities);
 	const [sexualPositions, setSexualPositions] = useState<number[]>(normalized.sexualPositions);
 	const [meetAt, setMeetAt] = useState<number[]>(normalized.meetAt);
 	const [nsfwPics, setNsfwPics] = useState<number[]>(normalized.nsfwPics);
@@ -167,6 +169,10 @@ export function BrowseFiltersOverlay({ initialDraft, onClose, onApply, isExplore
 		() => [{ value: -1, label: t("browse_filters.not_specified") }, ...getBodyTypeOptions(t)],
 		[t],
 	);
+	const ethnicityFilterOptions = useMemo<ManagedOption[]>(
+		() => [{ value: -1, label: t("browse_filters.not_specified") }, ...getEthnicityOptions(t)],
+		[t],
+	);
 	const sexualPositionFilterOptions = useMemo<ManagedOption[]>(
 		() => [{ value: -1, label: t("browse_filters.not_specified") }, ...getSexualPositionOptions(t)],
 		[t],
@@ -235,7 +241,7 @@ export function BrowseFiltersOverlay({ initialDraft, onClose, onApply, isExplore
 			heightCmMin, heightCmMax,
 			weightGramsMin, weightGramsMax,
 			tribes, lookingFor, relationshipStatuses,
-			bodyTypes, sexualPositions, meetAt,
+			bodyTypes, ethnicities, sexualPositions, meetAt,
 			nsfwPics, tags,
 			nicknameFilter,
 		});
@@ -495,6 +501,13 @@ export function BrowseFiltersOverlay({ initialDraft, onClose, onApply, isExplore
 							bodyTypes,
 							(value) => toggleMultiSelect(value, setBodyTypes),
 							Dumbbell,
+						)}
+						{renderSection(
+							t("profile_editor.sections.states.ethnicity"),
+							ethnicityFilterOptions,
+							ethnicities,
+							(value) => toggleMultiSelect(value, setEthnicities),
+							Users,
 						)}
 						{renderSection(
 							t("profile_editor.sections.expectations.meet_at"),

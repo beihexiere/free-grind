@@ -171,6 +171,7 @@ export function createProfileMethods(fetchRest: RestFetcher, t: (key: string, op
 				lookingFor?: string;
 				relationshipStatuses?: string;
 				bodyTypes?: string;
+				ethnicities?: string;
 				sexualPositions?: string;
 				meetAt?: string;
 				nsfwPics?: string;
@@ -227,6 +228,8 @@ export function createProfileMethods(fetchRest: RestFetcher, t: (key: string, op
 				queryParams.set("relationshipStatuses", params.filters.relationshipStatuses);
 			if (params.filters?.bodyTypes)
 				queryParams.set("bodyTypes", params.filters.bodyTypes);
+			if (params.filters?.ethnicities)
+				queryParams.set("ethnicities", params.filters.ethnicities);
 			if (params.filters?.sexualPositions)
 				queryParams.set("sexualPositions", params.filters.sexualPositions);
 			if (params.filters?.meetAt) queryParams.set("meetAt", params.filters.meetAt);
