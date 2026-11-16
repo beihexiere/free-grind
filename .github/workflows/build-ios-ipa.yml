@@ -21,24 +21,22 @@ on:
         description: "要构建的分支/tag/commit"
         required: false
         default: "development"
-  push:
-    branches: [main, development]
-    paths:
-      - "src/**"
-      - "src-tauri/**"
-      - "package.json"
-      - "bun.lock"
-      - "scripts/**"
-      - ".github/workflows/build-ios-ipa.yml"
+  schedule:                 # 定时触发，避开 GitHub 高峰排队
+    # cron: minute hour day month weekday  (UTC)
+    # 北京时间 = UTC+8，这里 UTC 03:00 = 北京时间 11:00（美东凌晨，runner 充足）
+    - cron: "0 3 * * *"
+
+# 注意：去掉了 push 触发，因为 free tier 的 macos runner 白天排队严重。
+# 需要立即构建请用 Actions → Run workflow 手动触发。
 
 jobs:
   build-ios:
-    runs-on: [macos-15, macos-14, macos-13]   # fallback queue: arm64 → intel x86-64
+    runs-on: macos-15       # Apple Silicon — 仅在 UTC 03:00（北京时间 11:00）定时跑避开排队高峰
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.ref || github.ref }}
+          ref: ${{ github.event.inputs.ref || 'development' }}
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
