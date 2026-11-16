@@ -33,7 +33,7 @@ on:
 
 jobs:
   build-ios:
-    runs-on: macos-15       # Apple Silicon (M1) macOS runner; macos-14 retired by GitHub 2026-10-01
+    runs-on: macos-14       # Intel runner (no queue; use macos-15 when Apple Silicon capacity is available)
     steps:
       - name: Checkout
         uses: actions/checkout@v4
