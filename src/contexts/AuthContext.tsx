@@ -27,6 +27,7 @@ import { loadSeenCache } from "../services/seenStore";
 import { runInboxSync } from "../services/inboxSync";
 import { runTapsAutomationSync } from "../services/tapsSync";
 import { syncSavedPhrasesFromServer } from "../services/savedPhrases";
+import { primeLocalNotifications } from "../services/localNotify";
 
 const AUTH_USER_ID_STORAGE_KEY = "fg-user-id";
 const PUSH_TOKEN_STORAGE_KEY = "fg-fcm-token";
@@ -353,6 +354,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 		void apiFunctions.registerPresence(state.userId);
 	}, [state.userId, state.isLoading, apiFunctions]);
+
+	// Prime OS notification permission prompt after login.
+	// localNotify.primeLocalNotifications() is idempotent — it only pops the
+	// system dialog once per session (cached in permissionPromise).
+	useEffect(() => {
+		if (state.isLoading || !state.userId) return;
+		void primeLocalNotifications().then((ok) => {
+			appLog.debug(`[Auth] primeLocalNotifications -> ${ok}`);
+		});
+	}, [state.userId, state.isLoading]);
 
 	// A third-party (JWT) login's token has no real refresh mechanism, so once it
 	// expires any authenticated API call anywhere in the app can be the one that
