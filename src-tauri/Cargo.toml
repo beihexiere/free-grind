@@ -49,7 +49,7 @@ http = "1"
 url = "2"
 tauri-plugin-sql = { version = "2", features = ["sqlite"] }
 wreq = { version = "5.3", features = ["gzip", "json"] }
-# Blocking HTTP client for version fetching (non-critical, doesn't affect auth fingerprint)
+# Used by hotswap-patched (OTA updater) and AppError conversion; no longer used for version fetching
 reqwest = { version = "0.12", features = ["json", "blocking"], default-features = false }
 tauri-plugin-hotswap = { path = "hotswap-patched" }
 rustls = { version = "0.23", features = ["ring"] }
