@@ -942,6 +942,8 @@
   },
   "notifications_page": {
     "subtitle": "Choose which notifications you get, and whether they show up while the app is open.",
+    "local_enabled": "Local Notifications",
+    "local_enabled_desc": "Show local notifications on your device when the app is open or in the background. Turn this off to suppress all local notifications (message, taps, etc.).",
     "chat_enabled": "Message Notifications",
     "chat_enabled_desc": "Get notified when someone sends you a message.",
     "taps_enabled": "Tap Notifications",

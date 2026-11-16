@@ -942,6 +942,8 @@
   },
   "notifications_page": {
     "subtitle": "选择你接收哪些通知，以及在应用打开时是否显示通知。",
+    "local_enabled": "本地通知",
+    "local_enabled_desc": "在应用打开或后台时显示本地通知。关闭此项将屏蔽所有本地通知（消息、轻点等）。",
     "chat_enabled": "消息通知",
     "chat_enabled_desc": "有人给你发消息时通知你。",
     "taps_enabled": "轻点通知",

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Bell, Flame, MessageCircle } from "lucide-react";
+import { Bell, Flame, MessageCircle, Radio } from "lucide-react";
 import { BackToSettings } from "../../components/BackToSettings";
 import { ToggleRow } from "../../components/ui/toggle-row";
 import { useTranslation } from "react-i18next";
@@ -7,9 +7,11 @@ import { useSettingsHighlight } from "../../hooks/useSettingsHighlight";
 import {
 	CHAT_NOTIFICATIONS_ENABLED_KEY,
 	FOREGROUND_NOTIFICATIONS_ENABLED_KEY,
+	LOCAL_NOTIFICATIONS_ENABLED_KEY,
 	TAP_NOTIFICATIONS_ENABLED_KEY,
 	isChatNotificationsEnabled,
 	isForegroundNotificationsEnabled,
+	isLocalNotificationsEnabled,
 	isTapNotificationsEnabled,
 	syncNotificationSettingsToNative,
 } from "../../utils/notificationSettings";
@@ -20,6 +22,7 @@ export function NotificationsPage() {
 	const [chatEnabled, setChatEnabled] = useState(() => isChatNotificationsEnabled());
 	const [tapsEnabled, setTapsEnabled] = useState(() => isTapNotificationsEnabled());
 	const [foregroundEnabled, setForegroundEnabled] = useState(() => isForegroundNotificationsEnabled());
+	const [localEnabled, setLocalEnabled] = useState(() => isLocalNotificationsEnabled());
 
 	const setFlag = (key: string, value: boolean) => {
 		window.localStorage.setItem(key, String(value));
@@ -36,6 +39,19 @@ export function NotificationsPage() {
 
 			<div className="grid gap-6">
 				<div className="surface-card overflow-hidden divide-y divide-[var(--border)]">
+					<ToggleRow
+						id="notif-local-enabled"
+						highlighted={highlightId === "notif-local-enabled"}
+						icon={<Radio className="h-5 w-5" />}
+						iconClass="bg-purple-500/15 text-purple-400"
+						label={t("notifications_page.local_enabled")}
+						description={t("notifications_page.local_enabled_desc")}
+						checked={localEnabled}
+						onChange={(checked) => {
+							setLocalEnabled(checked);
+							setFlag(LOCAL_NOTIFICATIONS_ENABLED_KEY, checked);
+						}}
+					/>
 					<ToggleRow
 						id="notif-chat-enabled"
 						highlighted={highlightId === "notif-chat-enabled"}

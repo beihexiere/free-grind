@@ -20,6 +20,7 @@ import {
 import { platform } from "@tauri-apps/plugin-os";
 import { isTauriRuntime } from "./tauriWebSocket";
 import { appLog } from "../utils/logger";
+import { isLocalNotificationsEnabled } from "../utils/notificationSettings";
 
 // Matches the Linux .desktop entry's `Icon=`/`StartupWMClass=` value (the
 // main binary name, not the bundle `identifier`) — confirmed against the
@@ -73,6 +74,10 @@ async function ensurePermission(): Promise<boolean> {
  * only prompts once per app session.
  */
 export async function primeLocalNotifications(): Promise<boolean> {
+	if (!isLocalNotificationsEnabled()) {
+		appLog.debug("[notify] prime skipped (user disabled local notifications)");
+		return false;
+	}
 	if (!detectLocalNotifySupported()) {
 		appLog.debug("[notify] prime skipped (not supported)");
 		return false;
@@ -91,6 +96,9 @@ export interface LocalNotifyOptions {
 }
 
 export async function notifyLocal(options: LocalNotifyOptions): Promise<void> {
+	if (!isLocalNotificationsEnabled()) {
+		return;
+	}
 	if (options.suppress) {
 		appLog.debug("[notify] suppressed", options.title);
 		return;

@@ -3,6 +3,7 @@
 // WebSocket) — lets the user control chat and tap notifications separately,
 // plus one general switch for whether either shows while the app is open
 // (foreground) or only via FCM once it's backgrounded/closed.
+export const LOCAL_NOTIFICATIONS_ENABLED_KEY = "notif_local_enabled";
 export const CHAT_NOTIFICATIONS_ENABLED_KEY = "notif_chat_enabled";
 export const TAP_NOTIFICATIONS_ENABLED_KEY = "notif_taps_enabled";
 export const FOREGROUND_NOTIFICATIONS_ENABLED_KEY = "notif_foreground_enabled";
@@ -14,6 +15,9 @@ function readSetting(key: string): boolean {
 	return typeof window === "undefined" || localStorage.getItem(key) !== "false";
 }
 
+export function isLocalNotificationsEnabled(): boolean {
+	return readSetting(LOCAL_NOTIFICATIONS_ENABLED_KEY);
+}
 export function isChatNotificationsEnabled(): boolean {
 	return readSetting(CHAT_NOTIFICATIONS_ENABLED_KEY);
 }
