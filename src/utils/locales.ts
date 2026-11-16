@@ -1,7 +1,40 @@
-const localeModules = import.meta.glob("../../public/locales/*/translation.json");
+// Hard-coded language list for production reliability.
+// Using a static list instead of import.meta.glob because glob can fail to
+// match locale directories with hyphens (e.g. zh-CN) in certain build configs,
+// and the set of supported locales changes rarely. Add new locales here when
+// a new translation file is added under public/locales/<code>/translation.json.
+const HARDCODED_LOCALES = [
+	"ar",
+	"arz",
+	"bs",
+	"de",
+	"dum",
+	"en",
+	"es",
+	"es-419",
+	"fr",
+	"nl",
+	"pt",
+	"pt-BR",
+	"sl",
+	"zh-CN",
+];
 
-const localeCodeRegex = /\/public\/locales\/([^/]+)\/translation\.json$/;
-const DEFAULT_LOCALES = ["en", "de"];
+// Also try glob scan for forward-compatibility; merge with hard-coded list.
+// Fallback so this file still works if someone adds locales without updating us.
+const globbedLocales = (() => {
+	try {
+		const modules = import.meta.glob("../../public/locales/*/translation.json");
+		const regex = /\/public\/locales\/([^/]+)\/translation\.json$/;
+		return Object.keys(modules)
+			.map((p) => p.match(regex)?.[1] ?? null)
+			.filter((l): l is string => Boolean(l));
+	} catch {
+		return [] as string[];
+	}
+})();
+
+const ALL_LOCALES = [...new Set([...HARDCODED_LOCALES, ...globbedLocales])].sort();
 
 function getDisplayName(localeCode: string): string {
 	try {
@@ -16,16 +49,7 @@ function getDisplayName(localeCode: string): string {
 	}
 }
 
-const detectedLocales = Object.keys(localeModules)
-	.map((path) => {
-		const match = path.match(localeCodeRegex);
-		return match?.[1] ?? null;
-	})
-	.filter((locale): locale is string => Boolean(locale))
-	.sort((a, b) => a.localeCompare(b));
-
-export const SUPPORTED_LOCALES =
-	detectedLocales.length > 0 ? detectedLocales : DEFAULT_LOCALES;
+export const SUPPORTED_LOCALES = ALL_LOCALES;
 
 export const SUPPORTED_LOCALE_OPTIONS = SUPPORTED_LOCALES.map((localeCode) => ({
 	value: localeCode,
