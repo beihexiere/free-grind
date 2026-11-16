@@ -33,7 +33,7 @@ on:
 
 jobs:
   build-ios:
-    runs-on: macos-14       # Intel runner (no queue; use macos-15 when Apple Silicon capacity is available)
+    runs-on: [macos-15, macos-14, macos-13]   # fallback queue: arm64 → intel x86-64
     steps:
       - name: Checkout
         uses: actions/checkout@v4
