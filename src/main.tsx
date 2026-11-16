@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "./dev/install-fake-tauri"; // DEV-only: inject fake __TAURI__ bridge before any @tauri-apps import
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "@fontsource-variable/ibm-plex-sans/index.css";

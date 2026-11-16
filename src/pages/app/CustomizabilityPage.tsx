@@ -192,6 +192,7 @@ export function CustomizabilityPage() {
 			await i18n.changeLanguage(nextLocale);
 			document.documentElement.lang = nextLocale;
 		} catch (error) {
+			console.error("[CustomizabilityPage] changeLanguage failed:", error);
 			const message =
 				error instanceof Error && error.message
 					? error.message

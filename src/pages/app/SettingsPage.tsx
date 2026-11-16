@@ -609,7 +609,7 @@ export function SettingsPage() {
 					aria-label={t("settings.back_to_browse")}
 				>
 					<ChevronLeft className="h-4 w-4" />
-					Browse
+					{t("settings.back_to_browse")}
 				</button>
 				<div className="flex items-center gap-2">
 					<h1 className="app-title">{t("settings.title")}</h1>
@@ -683,7 +683,7 @@ export function SettingsPage() {
 				    history and caches fully separate (see chatDb.ts/cache.ts), so
 				    switching never shows a leftover account's data. */}
 				<div className="min-w-0">
-					<p className="mb-2 px-1 text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">Profile</p>
+					<p className="mb-2 px-1 text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">{t("settings.section_profile")}</p>
 					<div className="surface-card overflow-hidden divide-y divide-[var(--border)]">
 						{(() => {
 							const activeAccount = userId != null
@@ -793,7 +793,7 @@ export function SettingsPage() {
 
 				{/* Chat */}
 				<div>
-					<p className="mb-2 px-1 text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">Chat</p>
+					<p className="mb-2 px-1 text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">{t("settings.section_chat")}</p>
 					<div className="surface-card overflow-hidden divide-y divide-[var(--border)]">
 						<div className="flex items-center gap-3 px-4 py-3.5">
 							<div className="relative shrink-0">
@@ -849,7 +849,7 @@ export function SettingsPage() {
 
 				{/* Safety */}
 				<div>
-					<p className="mb-2 px-1 text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">Safety</p>
+					<p className="mb-2 px-1 text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">{t("settings.section_safety")}</p>
 					<div className="surface-card overflow-hidden divide-y divide-[var(--border)]">
 						{navRow(
 							() => navigate("/settings/blocked"),
@@ -897,7 +897,7 @@ export function SettingsPage() {
 
 				{/* Customizability */}
 				<div>
-					<p className="mb-2 px-1 text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">Customizability</p>
+					<p className="mb-2 px-1 text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">{t("settings.section_customizability")}</p>
 					<div className="surface-card overflow-hidden divide-y divide-[var(--border)]">
 						{navRow(
 							() => navigate("/settings/customizability"),
@@ -948,7 +948,7 @@ export function SettingsPage() {
 
 				{/* Updates */}
 				<div>
-					<p className="mb-2 px-1 text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">Updates</p>
+					<p className="mb-2 px-1 text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">{t("settings.section_updates")}</p>
 					<div className="surface-card overflow-hidden">
 						<div className="flex items-start gap-3 px-4 py-3.5">
 							<div className="relative shrink-0">
@@ -1014,7 +1014,7 @@ export function SettingsPage() {
 				{/* Dev tools */}
 				{developerMode ? (
 					<div>
-						<p className="mb-2 px-1 text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">Developer</p>
+						<p className="mb-2 px-1 text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">{t("settings.section_developer")}</p>
 						<div className="surface-card overflow-hidden divide-y divide-[var(--border)]">
 							<div className="flex w-full items-center gap-3 px-4 py-3.5">
 								<div className="rounded-2xl bg-[var(--surface-2)] p-2.5 shrink-0 text-[var(--text-muted)]">
@@ -1204,7 +1204,7 @@ export function SettingsPage() {
 
 				{/* About */}
 				<div>
-					<p className="mb-2 px-1 text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">About</p>
+					<p className="mb-2 px-1 text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">{t("settings.section_about")}</p>
 					<div className="surface-card overflow-hidden divide-y divide-[var(--border)]">
 						{navRow(
 							() => navigate("/settings/about"),
