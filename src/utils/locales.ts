@@ -17,7 +17,7 @@ const HARDCODED_LOCALES = [
 	"pt",
 	"pt-BR",
 	"sl",
-	"zh-CN",
+	"zh_CN",
 ];
 
 // Also try glob scan for forward-compatibility; merge with hard-coded list.
