@@ -4,6 +4,27 @@ set -eu
 sh scripts/tauri.sh ios init --ci
 bun run build
 
+# === Fix AppIcon: gen/apple/Assets.xcassets may contain committed Grindr icons.
+# Wipe and regenerate from src-tauri/icons/app-icon-source.png (Free Grind orange mask).
+# Uses sips (macOS built-in) so no extra deps needed on CI.
+APPICON_SET="src-tauri/gen/apple/Assets.xcassets/AppIcon.appiconset"
+SRC_ICON="src-tauri/icons/app-icon-source.png"
+rm -f "$APPICON_SET"/*.png
+for pair in \
+  "AppIcon-20x20@1x:20" "AppIcon-20x20@2x:40" "AppIcon-20x20@2x-1:40" "AppIcon-20x20@3x:60" \
+  "AppIcon-29x29@1x:29" "AppIcon-29x29@2x:58" "AppIcon-29x29@2x-1:58" "AppIcon-29x29@3x:87" \
+  "AppIcon-40x40@1x:40" "AppIcon-40x40@2x:80" "AppIcon-40x40@2x-1:80" "AppIcon-40x40@3x:120" \
+  "AppIcon-512@2x:1024" \
+  "AppIcon-60x60@2x:120" "AppIcon-60x60@3x:180" \
+  "AppIcon-76x76@1x:76" "AppIcon-76x76@2x:152" \
+  "AppIcon-83.5x83.5@2x:167"
+do
+  name="${pair%:*}"
+  size="${pair#*:}"
+  sips -z "$size" "$size" "$SRC_ICON" --out "$APPICON_SET/$name.png" >/dev/null
+done
+echo "AppIcon regenerated from $SRC_ICON"
+
 PROJECT_SPEC="src-tauri/gen/apple/project.yml"
 TEMP_SPEC="src-tauri/gen/apple/project.unsigned.yml"
 DERIVED_DATA_PATH="src-tauri/gen/apple/.deriveddata_unsigned"
