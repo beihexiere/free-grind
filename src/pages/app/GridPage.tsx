@@ -1067,6 +1067,14 @@ export function GridPage() {
 			);
 		}
 
+		// Client-side ethnicity filter (Grindr API /v4/cascade does not support
+		// ethnicity as a server-side filter param, so we filter in the browser).
+		if (ethnicities.length > 0) {
+			results = results.filter(
+				(card) => card.ethnicity != null && ethnicities.includes(card.ethnicity),
+			);
+		}
+
 		if (searchTerm) {
 			const lower = searchTerm.toLowerCase();
 			results = results.filter((card) => {
@@ -1091,7 +1099,7 @@ export function GridPage() {
 		}
 
 		return results;
-	}, [cards, sortBy, showDebugInfo, hiddenProfileIds, browseFilters.isVisiting, nicknameFilter, searchTerm, favoriteNotes, selfCard]);
+	}, [cards, sortBy, showDebugInfo, hiddenProfileIds, browseFilters.isVisiting, nicknameFilter, ethnicities, searchTerm, favoriteNotes, selfCard]);
 
 	const selectedBrowseCard = useMemo(() => {
 		if (!activeProfileId) {

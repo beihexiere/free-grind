@@ -228,8 +228,8 @@ export function createProfileMethods(fetchRest: RestFetcher, t: (key: string, op
 				queryParams.set("relationshipStatuses", params.filters.relationshipStatuses);
 			if (params.filters?.bodyTypes)
 				queryParams.set("bodyTypes", params.filters.bodyTypes);
-			if (params.filters?.ethnicities)
-				queryParams.set("ethnicities", params.filters.ethnicities);
+			// NOTE: ethnicities is NOT a supported cascade filter param.
+			// Grindr API /v4/cascade ignores it — we do client-side filtering instead (see GridPage.filterResults).
 			if (params.filters?.sexualPositions)
 				queryParams.set("sexualPositions", params.filters.sexualPositions);
 			if (params.filters?.meetAt) queryParams.set("meetAt", params.filters.meetAt);
