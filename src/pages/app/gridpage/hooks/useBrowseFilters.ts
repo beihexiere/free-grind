@@ -174,16 +174,16 @@ export function useBrowseFilters(persistedBrowseFilters: BrowseFiltersDraft) {
 			return Number.isFinite(parsed) ? parsed : undefined;
 		};
 
-		const toOptionalNumberCsv = (value: number[]): string | undefined => {
-			if (value.length === 0) return undefined;
+		const toOptionalNumberCsv = (value: number[] | undefined): string | undefined => {
+			if (!value || value.length === 0) return undefined;
 			const normalized = [...new Set(value)]
 				.filter((item) => Number.isFinite(item))
 				.join(",");
 			return normalized.length > 0 ? normalized : undefined;
 		};
 
-		const toOptionalTagCsv = (value: string[]): string | undefined => {
-			if (value.length === 0) return undefined;
+		const toOptionalTagCsv = (value: string[] | undefined): string | undefined => {
+			if (!value || value.length === 0) return undefined;
 			const normalized = [...new Set(value.map((item) => item.trim()))]
 				.filter((item) => item.length > 0)
 				.join(",");
