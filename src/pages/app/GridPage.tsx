@@ -1069,9 +1069,11 @@ export function GridPage() {
 
 		// Client-side ethnicity filter (Grindr API /v4/cascade does not support
 		// ethnicity as a server-side filter param, so we filter in the browser).
+		// Profiles that didn't fill in their ethnicity (null) are always shown —
+		// only profiles with an explicit ethnicity that doesn't match get hidden.
 		if (ethnicities.length > 0) {
 			results = results.filter(
-				(card) => card.ethnicity != null && ethnicities.includes(card.ethnicity),
+				(card) => card.ethnicity == null || ethnicities.includes(card.ethnicity),
 			);
 		}
 
